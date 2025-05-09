@@ -26,6 +26,18 @@ public class RoomService {
     }
 
     public Room createRoom(Room room) {
+        // For new rooms, set a high ID to avoid conflicts
+        if (room.getId() == null) {
+            // Get the highest ID currently in the database and add 1000
+            Long highestId = roomRepository.findAll().stream()
+                    .map(Room::getId)
+                    .max(Long::compareTo)
+                    .orElse(0L);
+
+            // Set the new ID to be at least 2000 or 1000 more than the highest existing ID
+            room.setId(Math.max(2000L, highestId + 1000));
+        }
+
         return roomRepository.save(room);
     }
 

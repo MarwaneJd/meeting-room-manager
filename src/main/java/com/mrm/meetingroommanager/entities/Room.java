@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // Don't use any automatic generation strategy
     private Long id;
 
     @NotBlank(message = "Room name is required")

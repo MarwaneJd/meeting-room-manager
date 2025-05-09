@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Meeting Room Manager</title>
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            padding: 3rem 0;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .feature-card {
+            transition: transform 0.3s ease;
+            border: none;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        .bg-primary-soft {
+            background-color: rgba(13, 110, 253, 0.1);
+        }
+        .bg-success-soft {
+            background-color: rgba(25, 135, 84, 0.1);
+        }
+        .stats-card {
+            border-left: 4px solid;
+            transition: transform 0.3s ease;
+        }
+        .stats-card:hover {
+            transform: translateX(5px);
+        }
+        .quick-actions {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<!-- Home Page Content -->
+<section th:fragment="content">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container text-center py-4">
+            <h1 class="display-4 fw-bold">Welcome to Meeting Room Manager</h1>
+            <p class="lead fs-4 mb-4">Efficiently manage your meeting spaces and reservations</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a th:href="@{/rooms}" class="btn btn-light btn-lg px-4">
+                    <i class="fas fa-door-open me-2"></i>Browse Rooms
+                </a>
+                <a th:href="@{/reservations}" class="btn btn-warning btn-lg px-4 fw-bold" style="background-color: #ffc107; border-color: #ffc107; color: #000;">
+                    <i class="fas fa-calendar-alt me-2"></i>View Reservations
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Stats (only for authenticated users) -->
+    <div class="row mb-4" sec:authorize="isAuthenticated()">
+        <div class="col-12">
+            <h2 class="mb-4">Dashboard</h2>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card stats-card h-100 shadow-sm" style="border-left-color: #0d6efd;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-1">Total Rooms</h6>
+                            <h3 class="mb-0">3</h3>
+                        </div>
+                        <div class="bg-primary-soft p-3 rounded">
+                            <i class="fas fa-door-open fa-2x text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card stats-card h-100 shadow-sm" style="border-left-color: #198754;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-1">Your Reservations</h6>
+                            <h3 class="mb-0">0</h3>
+                        </div>
+                        <div class="bg-success-soft p-3 rounded">
+                            <i class="fas fa-calendar-check fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card stats-card h-100 shadow-sm" style="border-left-color: #dc3545;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-1">Today's Meetings</h6>
+                            <h3 class="mb-0">0</h3>
+                        </div>
+                        <div class="bg-danger-soft p-3 rounded" style="background-color: rgba(220, 53, 69, 0.1);">
+                            <i class="fas fa-business-time fa-2x text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions mb-4">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-4">Quick Actions</h2>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card feature-card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="icon-circle bg-primary-soft">
+                            <i class="fas fa-door-open fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="card-title mt-3">Meeting Rooms</h3>
+                        <p class="card-text">Browse and manage all available meeting rooms in your organization.</p>
+                        <a th:href="@{/rooms}" class="btn btn-primary">
+                            <i class="fas fa-door-open me-2"></i>View Rooms
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="card feature-card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="icon-circle bg-success-soft">
+                            <i class="fas fa-calendar-alt fa-2x text-success"></i>
+                        </div>
+                        <h3 class="card-title mt-3">Reservations</h3>
+                        <p class="card-text">Schedule, view, and manage your meeting room reservations.</p>
+                        <a th:href="@{/reservations}" class="btn btn-success">
+                            <i class="fas fa-calendar-alt me-2"></i>Manage Reservations
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">About Meeting Room Manager</h3>
+                    <p class="card-text">
+                        Meeting Room Manager is a comprehensive solution for managing meeting rooms and reservations in your organization.
+                        Our platform helps you streamline the process of booking meeting spaces, avoiding scheduling conflicts,
+                        and making the most efficient use of your facilities.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

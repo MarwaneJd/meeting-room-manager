@@ -33,6 +33,18 @@ public class ReservationService {
     }
 
     public Reservation createReservation(Reservation reservation) {
+        // For new reservations, set a high ID to avoid conflicts
+        if (reservation.getId() == null) {
+            // Get the highest ID currently in the database and add 1000
+            Long highestId = reservationRepository.findAll().stream()
+                    .map(Reservation::getId)
+                    .max(Long::compareTo)
+                    .orElse(0L);
+
+            // Set the new ID to be at least 2000 or 1000 more than the highest existing ID
+            reservation.setId(Math.max(2000L, highestId + 1000));
+        }
+
         return reservationRepository.save(reservation);
     }
 

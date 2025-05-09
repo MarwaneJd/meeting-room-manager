@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Room Details</title>
+</head>
+<body>
+<section th:fragment="content">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="card-title mb-0" th:text="${room.name}">Room Name</h3>
+            <span class="badge bg-light text-dark rounded-pill">
+                    <i class="fas fa-users me-1"></i>
+                    <span th:text="${room.capacity}">10</span> people
+                </span>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-info-circle me-2"></i>Room Information</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>ID:</strong> <span th:text="${room.id}">1</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Location:</strong> <span th:text="${room.location}">Building A, Floor 2</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Capacity:</strong> <span th:text="${room.capacity}">10</span> people
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5><i class="fas fa-cog me-2"></i>Actions</h5>
+                    <div class="d-grid gap-2">
+                        <a th:href="@{/rooms/{id}/edit(id=${room.id})}" class="btn btn-outline-primary">
+                            <i class="fas fa-edit me-1"></i> Edit Room
+                        </a>
+                        <a th:href="@{/reservations/new?roomId={id}(id=${room.id})}" class="btn btn-outline-success">
+                            <i class="fas fa-calendar-plus me-1"></i> Make Reservation
+                        </a>
+                        <a th:href="@{/rooms/{id}/delete(id=${room.id})}" class="btn btn-outline-danger"
+                           onclick="return confirm('Are you sure you want to delete this room?')">
+                            <i class="fas fa-trash-alt me-1"></i> Delete Room
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <h5 class="mb-3"><i class="fas fa-calendar-alt me-2"></i>Upcoming Reservations</h5>
+            <div class="alert alert-info" th:if="${room.reservations == null || room.reservations.empty}">
+                <i class="fas fa-info-circle me-2"></i> No upcoming reservations for this room.
+            </div>
+
+            <div class="table-responsive" th:unless="${room.reservations == null || room.reservations.empty}">
+                <table class="table table-striped table-hover">
+                    <thead class="table-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>User</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="reservation : ${room.reservations}">
+                        <td th:text="${reservation.title}">Meeting</td>
+                        <td th:text="${#temporals.format(reservation.startTime, 'yyyy-MM-dd HH:mm')}">2025-05-08 10:00</td>
+                        <td th:text="${#temporals.format(reservation.endTime, 'yyyy-MM-dd HH:mm')}">2025-05-08 11:00</td>
+                        <td th:text="${reservation.user != null ? reservation.user.username : 'N/A'}">User</td>
+                        <td>
+                            <a th:href="@{/reservations/{id}(id=${reservation.id})}" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-white">
+            <a th:href="@{/rooms}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Back to Rooms
+            </a>
+        </div>
+    </div>
+</section>
+</body>
+</html>
