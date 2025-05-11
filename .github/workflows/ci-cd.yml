@@ -9,6 +9,21 @@ on:
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14-alpine
+        env:
+          POSTGRES_DB: meeting_room_manager
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: Password@0@
+        ports:
+          - 5432:5432
+        # Health check to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - uses: actions/checkout@v3
 
@@ -21,6 +36,10 @@ jobs:
 
       - name: Build and test
         run: ./mvnw clean verify
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/meeting_room_manager
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: Password@0@
 
   build-and-push:
     needs: lint-and-test
