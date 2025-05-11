@@ -46,14 +46,3 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/meeting-room-manager:latest
           cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/meeting-room-manager:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/meeting-room-manager:buildcache,mode=max
-
-  deploy:
-    needs: build-and-push
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to Render
-        uses: johnbeynon/render-deploy-action@v0.0.8
-        with:
-          service-id: ${{ secrets.RENDER_SERVICE_ID }}
-          api-key: ${{ secrets.RENDER_API_KEY }}
