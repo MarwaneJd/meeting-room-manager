@@ -22,4 +22,12 @@ public class Role {
     public List<User> getUsers() {
         return users;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
