@@ -41,13 +41,24 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
-    public Optional<Room> updateRoom(Long id, Room updatedRoom) {
+    public Room updateRoom(Long id, Room updatedRoom) {
         return roomRepository.findById(id).map(room -> {
             room.setName(updatedRoom.getName());
             room.setCapacity(updatedRoom.getCapacity());
             room.setLocation(updatedRoom.getLocation());
             return roomRepository.save(room);
-        });
+        }).orElseThrow(() -> new ResourceNotFoundException("Room not found with id " + id));
+    }
+
+    /**
+     * Get rooms with capacity greater than or equal to the specified minimum capacity
+     * @param minCapacity the minimum capacity required
+     * @return list of rooms meeting the capacity requirement
+     */
+    public List<Room> getRoomsByMinCapacity(int minCapacity) {
+        return roomRepository.findAll().stream()
+                .filter(room -> room.getCapacity() >= minCapacity)
+                .toList();
     }
 
     public void deleteRoom(Long id) {

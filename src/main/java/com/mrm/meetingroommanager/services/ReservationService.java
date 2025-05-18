@@ -32,6 +32,25 @@ public class ReservationService {
         return reservationRepository.findByRoomId(roomId);
     }
 
+    // Methods for the API controllers
+    /**
+     * Get all reservations for a specific user
+     * @param userId ID of the user
+     * @return List of reservations for the user
+     */
+    public List<Reservation> getReservationsByUser(Long userId) {
+        return findByUserId(userId);
+    }
+
+    /**
+     * Get all reservations for a specific room
+     * @param roomId ID of the room
+     * @return List of reservations for the room
+     */
+    public List<Reservation> getReservationsByRoom(Long roomId) {
+        return findByRoomId(roomId);
+    }
+
     public Reservation createReservation(Reservation reservation) {
         // For new reservations, set a high ID to avoid conflicts
         if (reservation.getId() == null) {
