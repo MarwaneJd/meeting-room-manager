@@ -23,11 +23,8 @@ EXPOSE 8080
 # Create a volume for persistent data
 VOLUME /tmp
 
-# Set environment variables for PostgreSQL connection
-# These will be overridden by external environment variables when running the container
-ENV SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/meeting_room_manager
-ENV SPRING_DATASOURCE_USERNAME=postgres
-ENV SPRING_DATASOURCE_PASSWORD=Password@0@
+# Set Spring profile to prod
+ENV SPRING_PROFILES_ACTIVE=prod
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "/app/target/meetingroommanager-0.0.1-SNAPSHOT.jar"]

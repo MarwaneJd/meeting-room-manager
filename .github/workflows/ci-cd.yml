@@ -15,7 +15,7 @@ jobs:
         env:
           POSTGRES_DB: meeting_room_manager
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: Password@0@
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         ports:
           - 5432:5432
         # Health check to wait until postgres has started
@@ -39,7 +39,7 @@ jobs:
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/meeting_room_manager
           SPRING_DATASOURCE_USERNAME: postgres
-          SPRING_DATASOURCE_PASSWORD: Password@0@
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
   build-and-push:
     needs: lint-and-test
