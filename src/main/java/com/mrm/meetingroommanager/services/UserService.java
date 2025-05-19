@@ -42,6 +42,16 @@ public class UserService {
     }
 
     public User saveUser(User user) {
+        // Encode the password if it's not already encoded
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        // Save the user
+        return userRepository.save(user);
+    }
+
+    public User saveNewUser(User user) {
         // Always set ID to null for new users to let the database generate it
         user.setId(null);
 
