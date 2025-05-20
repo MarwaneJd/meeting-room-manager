@@ -10,6 +10,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: meeting_room_manager
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: Password@0@
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
     - uses: actions/checkout@v3
 
@@ -23,4 +38,7 @@ jobs:
     - name: Build and Test with Maven
       env:
         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-      run: mvn clean install
+        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/meeting_room_manager
+        SPRING_DATASOURCE_USERNAME: postgres
+        SPRING_DATASOURCE_PASSWORD: Password@0@
+      run: mvn -X test
