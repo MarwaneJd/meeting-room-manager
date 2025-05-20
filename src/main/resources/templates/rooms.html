@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Meeting Rooms</title>
+    <title>Rooms - Meet Room</title>
 </head>
 <body>
 <section th:fragment="content">
@@ -20,52 +20,89 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="mb-0">Meeting Rooms</h1>
-        <a th:href="@{/rooms/new}" class="btn btn-primary">
-            <i class="fas fa-plus-circle me-1"></i> Add New Room
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5">
+        <div>
+            <h1 class="mb-2 mb-md-0 fw-bold">Meeting Rooms</h1>
+            <p class="text-muted mb-3 mb-md-0">Manage and explore all available meeting spaces</p>
+        </div>
+        <a th:href="@{/rooms/new}" class="btn btn-accent">
+            <i class="fas fa-plus-circle me-2"></i> Add New Room
         </a>
     </div>
 
-    <div class="alert alert-info" th:if="${rooms.empty}">
-        <i class="fas fa-info-circle me-2"></i> No meeting rooms available. Click "Add New Room" to create one.
+    <div class="alert alert-info" th:if="${rooms.empty}" style="background-color: rgba(46, 139, 87, 0.1); border: 1px solid rgba(46, 139, 87, 0.2); color: var(--text-color);">
+        <i class="fas fa-info-circle me-2" style="color: var(--primary-color);"></i> No meeting rooms available. Click "Add New Room" to create one.
     </div>
 
     <div class="row row-cols-1 row-cols-md-3 g-4" th:unless="${rooms.empty}">
         <div class="col" th:each="room : ${rooms}">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0" th:text="${room.name}">Room Name</h5>
-                    <span class="badge bg-light text-dark rounded-pill">
-                            <i class="fas fa-users me-1"></i>
-                            <span th:text="${room.capacity}">10</span>
-                        </span>
+            <div class="card room-card h-100 shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0 fw-bold" th:text="${room.name}">Room Name</h5>
+                    <span class="badge rounded-pill" style="background-color: rgba(46, 139, 87, 0.1); color: var(--text-color);">
+                        <i class="fas fa-users me-1" style="color: var(--primary-color);"></i>
+                        <span th:text="${room.capacity}">10</span> people
+                    </span>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">
-                        <i class="fas fa-map-marker-alt text-secondary me-2"></i>
-                        <span th:text="${room.location}">Location</span>
-                    </p>
-                    <p class="card-text" th:if="${room.reservations != null}">
-                        <i class="fas fa-calendar-check text-secondary me-2"></i>
-                        <span th:text="${room.reservations.size()}">0</span> reservations
-                    </p>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="p-2 rounded-circle me-3" style="background-color: rgba(46, 139, 87, 0.1);">
+                            <i class="fas fa-map-marker-alt" style="color: var(--primary-color);"></i>
+                        </div>
+                        <span th:text="${room.location}" class="fw-medium">Location</span>
+                    </div>
+                    <div class="d-flex align-items-center" th:if="${room.reservations != null}">
+                        <div class="p-2 rounded-circle me-3" style="background-color: rgba(60, 179, 113, 0.1);">
+                            <i class="fas fa-calendar-check" style="color: var(--accent-color);"></i>
+                        </div>
+                        <span class="fw-medium">
+                            <span th:text="${room.reservations.size()}">0</span> upcoming meetings
+                        </span>
+                    </div>
+                    <div class="mt-3 pt-3 border-top">
+                        <h6 class="mb-2">Room Features:</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge" style="background-color: rgba(46, 139, 87, 0.1); color: var(--text-color);"><i class="fas fa-wifi me-1" style="color: var(--primary-color);"></i> Wi-Fi</span>
+                            <span class="badge" style="background-color: rgba(60, 179, 113, 0.1); color: var(--text-color);"><i class="fas fa-tv me-1" style="color: var(--accent-color);"></i> TV</span>
+                            <span class="badge" style="background-color: rgba(34, 139, 34, 0.1); color: var(--text-color);"><i class="fas fa-chalkboard me-1" style="color: var(--accent-secondary);"></i> Whiteboard</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-footer bg-white border-0">
-                    <div class="d-flex justify-content-between">
-                        <a th:href="@{/rooms/{id}(id=${room.id})}" class="btn btn-sm btn-outline-primary">
-                            <i class="fas fa-eye me-1"></i> View
-                        </a>
-                        <div>
-                            <a th:href="@{/rooms/{id}/edit(id=${room.id})}" class="btn btn-sm btn-outline-secondary me-1">
-                                <i class="fas fa-edit"></i> Edit
+                <div class="card-footer bg-white border-0 p-3">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-5 col-12">
+                            <a th:href="@{/rooms/{id}(id=${room.id})}" class="btn btn-sm btn-success w-100 d-flex align-items-center justify-content-center gap-1">
+                                <i class="fas fa-calendar-plus"></i> View Details
                             </a>
-                            <a href="#" class="btn btn-sm btn-outline-danger delete-btn"
-                               th:data-delete-url="@{/rooms/{id}/delete(id=${room.id})}"
-                               th:data-item-name="${room.name}"
-                               data-item-type="room">
-                                <i class="fas fa-trash-alt"></i> Delete
+                        </div>
+
+                        <div class="col-md-5 col-12">
+                            <a th:href="@{/reservations/new(roomId=${room.id})}" class="btn btn-sm btn-success w-100 d-flex align-items-center justify-content-center gap-1">
+                                <i class="fas fa-calendar-plus"></i> Book
                             </a>
+                        </div>
+                        <div class="col-md-2 col-12">
+                            <div class="dropdown w-100">
+                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle w-100" type="button"
+                                        id="roomActionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="roomActionDropdown">
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/rooms/{id}/edit(id=${room.id})}">
+                                            <i class="fas fa-edit text-secondary me-2"></i> Edit
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger delete-btn" href="#"
+                                           th:data-delete-url="@{/rooms/{id}/delete(id=${room.id})}"
+                                           th:data-item-name="${room.name}"
+                                           data-item-type="room">
+                                            <i class="fas fa-trash-alt me-2"></i> Delete
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

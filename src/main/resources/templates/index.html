@@ -2,115 +2,82 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Home - Meeting Room Manager</title>
-    <style>
-        .hero-section {
-            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
-            color: white;
-            padding: 3rem 0;
-            border-radius: 0.5rem;
-            margin-bottom: 2rem;
-        }
-        .feature-card {
-            transition: transform 0.3s ease;
-            border: none;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        .icon-circle {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-        }
-        .bg-primary-soft {
-            background-color: rgba(13, 110, 253, 0.1);
-        }
-        .bg-success-soft {
-            background-color: rgba(25, 135, 84, 0.1);
-        }
-        .stats-card {
-            border-left: 4px solid;
-            transition: transform 0.3s ease;
-        }
-        .stats-card:hover {
-            transform: translateX(5px);
-        }
-        .quick-actions {
-            background-color: #f8f9fa;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-        }
-    </style>
+    <title>Home - Meet Room</title>
 </head>
 <body>
 <!-- Home Page Content -->
 <section th:fragment="content">
-    <!-- Hero Section -->
+    <!-- Hero Section - Black and Green Transparent Design -->
     <div class="hero-section">
-        <div class="container text-center py-4">
-            <h1 class="display-4 fw-bold">Welcome to Meeting Room Manager</h1>
-            <p class="lead fs-4 mb-4">Efficiently manage your meeting spaces and reservations</p>
-            <div class="d-flex justify-content-center gap-3">
-                <a th:href="@{/rooms}" class="btn btn-light btn-lg px-4">
-                    <i class="fas fa-door-open me-2"></i>Browse Rooms
-                </a>
-                <a th:href="@{/reservations}" class="btn btn-warning btn-lg px-4 fw-bold" style="background-color: #ffc107; border-color: #ffc107; color: #000;">
-                    <i class="fas fa-calendar-alt me-2"></i>View Reservations
-                </a>
+        <div class="container text-center py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <h1 class="display-4 fw-bold mb-4" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">Simplify Your Meeting Space Management</h1>
+                    <p class="lead fs-4 mb-5" style="text-shadow: 0 1px 2px rgba(0,0,0,0.2);">Effortlessly organize, book, and manage your meeting rooms</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a th:href="@{/rooms}" class="btn btn-outline-light btn-lg px-4 py-2">
+                            <i class="fas fa-door-open me-2"></i>Explore Rooms
+                        </a>
+                        <a th:href="@{/reservations}" class="btn btn-outline-light btn-lg px-4 py-2">
+                            <i class="fas fa-calendar-alt me-2"></i>Book Now
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Dashboard Stats (only for authenticated users) -->
-    <div class="row mb-4" sec:authorize="isAuthenticated()">
+    <div class="row mb-5" sec:authorize="isAuthenticated()">
         <div class="col-12">
-            <h2 class="mb-4">Dashboard</h2>
+            <div class="d-flex align-items-center mb-3">
+                <div class="p-2 rounded-circle me-3" style="background: rgba(46, 139, 87, 0.1);">
+                    <i class="fas fa-tachometer-alt" style="color: var(--primary-color);"></i>
+                </div>
+                <h2 class="mb-0 fw-bold">Your Dashboard</h2>
+            </div>
+            <p class="text-muted mb-4 ps-5">Get a quick overview of your meeting spaces and upcoming reservations</p>
         </div>
         <div class="col-md-4 mb-3">
-            <div class="card stats-card h-100 shadow-sm" style="border-left-color: #0d6efd;">
-                <div class="card-body">
+            <div class="card stats-card h-100 shadow-sm" style="border-left-color: var(--primary-color);">
+                <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="text-muted mb-1">Total Rooms</h6>
-                            <h3 class="mb-0">3</h3>
+                            <h6 class="text-muted mb-2 fs-6">Total Rooms</h6>
+                            <h3 class="mb-0 fw-bold">3</h3>
                         </div>
-                        <div class="bg-primary-soft p-3 rounded">
-                            <i class="fas fa-door-open fa-2x text-primary"></i>
+                        <div class="p-3 rounded-circle" style="background: rgba(46, 139, 87, 0.1);">
+                            <i class="fas fa-door-open fa-2x" style="color: var(--primary-color);"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-3">
-            <div class="card stats-card h-100 shadow-sm" style="border-left-color: #198754;">
-                <div class="card-body">
+            <div class="card stats-card h-100 shadow-sm" style="border-left-color: var(--accent-color);">
+                <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="text-muted mb-1">Your Reservations</h6>
-                            <h3 class="mb-0">0</h3>
+                            <h6 class="text-muted mb-2 fs-6">Your Reservations</h6>
+                            <h3 class="mb-0 fw-bold">0</h3>
                         </div>
-                        <div class="bg-success-soft p-3 rounded">
-                            <i class="fas fa-calendar-check fa-2x text-success"></i>
+                        <div class="p-3 rounded-circle" style="background: rgba(60, 179, 113, 0.1);">
+                            <i class="fas fa-calendar-check fa-2x" style="color: var(--accent-color);"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-3">
-            <div class="card stats-card h-100 shadow-sm" style="border-left-color: #dc3545;">
-                <div class="card-body">
+            <div class="card stats-card h-100 shadow-sm" style="border-left-color: var(--accent-secondary);">
+                <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="text-muted mb-1">Today's Meetings</h6>
-                            <h3 class="mb-0">0</h3>
+                            <h6 class="text-muted mb-2 fs-6">Active Meetings</h6>
+                            <h3 class="mb-0 fw-bold">0</h3>
                         </div>
-                        <div class="bg-danger-soft p-3 rounded" style="background-color: rgba(220, 53, 69, 0.1);">
-                            <i class="fas fa-business-time fa-2x text-danger"></i>
+                        <div class="p-3 rounded-circle" style="background: rgba(34, 139, 34, 0.1);">
+                            <i class="fas fa-business-time fa-2x" style="color: var(--accent-secondary);"></i>
                         </div>
                     </div>
                 </div>
@@ -119,20 +86,26 @@
     </div>
 
     <!-- Quick Actions -->
-    <div class="quick-actions mb-4">
+    <div class="quick-actions mb-5" style="background-color: rgba(46, 139, 87, 0.03); border: 1px solid rgba(46, 139, 87, 0.1); border-radius: var(--border-radius); padding: 2rem;">
         <div class="row">
             <div class="col-12">
-                <h2 class="mb-4">Quick Actions</h2>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="p-2 rounded-circle me-3" style="background: rgba(46, 139, 87, 0.1);">
+                        <i class="fas fa-bolt" style="color: var(--primary-color);"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold">Quick Actions</h2>
+                </div>
+                <p class="text-muted mb-4 ps-5">Efficiently manage your workspace with these tools</p>
             </div>
             <div class="col-md-6 mb-3">
                 <div class="card feature-card h-100 shadow-sm">
-                    <div class="card-body text-center">
-                        <div class="icon-circle bg-primary-soft">
-                            <i class="fas fa-door-open fa-2x text-primary"></i>
+                    <div class="card-body text-center p-4">
+                        <div class="icon-circle" style="background: rgba(46, 139, 87, 0.1);">
+                            <i class="fas fa-door-open fa-2x" style="color: var(--primary-color);"></i>
                         </div>
-                        <h3 class="card-title mt-3">Meeting Rooms</h3>
-                        <p class="card-text">Browse and manage all available meeting rooms in your organization.</p>
-                        <a th:href="@{/rooms}" class="btn btn-primary">
+                        <h3 class="card-title mt-4 mb-3 fw-bold">Meeting Rooms</h3>
+                        <p class="card-text mb-4">Browse and manage all available meeting rooms in your organization.</p>
+                        <a th:href="@{/rooms}" class="btn btn-primary w-100">
                             <i class="fas fa-door-open me-2"></i>View Rooms
                         </a>
                     </div>
@@ -141,13 +114,13 @@
 
             <div class="col-md-6 mb-3">
                 <div class="card feature-card h-100 shadow-sm">
-                    <div class="card-body text-center">
-                        <div class="icon-circle bg-success-soft">
-                            <i class="fas fa-calendar-alt fa-2x text-success"></i>
+                    <div class="card-body text-center p-4">
+                        <div class="icon-circle" style="background: rgba(60, 179, 113, 0.1);">
+                            <i class="fas fa-calendar-alt fa-2x" style="color: var(--accent-color);"></i>
                         </div>
-                        <h3 class="card-title mt-3">Reservations</h3>
-                        <p class="card-text">Schedule, view, and manage your meeting room reservations.</p>
-                        <a th:href="@{/reservations}" class="btn btn-success">
+                        <h3 class="card-title mt-4 mb-3 fw-bold">Reservations</h3>
+                        <p class="card-text mb-4">Schedule, view, and manage your meeting room reservations.</p>
+                        <a th:href="@{/reservations}" class="btn btn-accent w-100">
                             <i class="fas fa-calendar-alt me-2"></i>Manage Reservations
                         </a>
                     </div>
@@ -157,16 +130,55 @@
     </div>
 
     <!-- About Section -->
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-md-12">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h3 class="card-title">About Meeting Room Manager</h3>
-                    <p class="card-text">
-                        Meeting Room Manager is a comprehensive solution for managing meeting rooms and reservations in your organization.
-                        Our platform helps you streamline the process of booking meeting spaces, avoiding scheduling conflicts,
-                        and making the most efficient use of your facilities.
-                    </p>
+            <div class="card shadow-sm" style="border: 1px solid var(--border-color); overflow: hidden; border-radius: var(--border-radius-lg);">
+                <div class="card-body p-5">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h3 class="card-title fw-bold mb-4"><span class="badge me-2" style="background-color: var(--primary-color); color: white;">Meet Room</span> The Smart Way to Manage Spaces</h3>
+                            <p class="card-text mb-4" style="line-height: 1.7;">
+                                Meet Room is a comprehensive solution for managing meeting rooms and reservations in your organization.
+                                Our platform helps you streamline the process of booking meeting spaces, avoiding scheduling conflicts,
+                                and making the most efficient use of your facilities.
+                            </p>
+                            <div class="mt-4">
+                                <h5 class="mb-3">Key Features:</h5>
+                                <div class="d-flex mb-2">
+                                    <i class="fas fa-check-circle text-success me-2 mt-1"></i>
+                                    <div>Interactive office maps for easy room selection</div>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <i class="fas fa-check-circle text-success me-2 mt-1"></i>
+                                    <div>Real-time availability and booking management</div>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <i class="fas fa-check-circle text-success me-2 mt-1"></i>
+                                    <div>Detailed analytics on room usage and efficiency</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center d-none d-md-block">
+                            <div class="position-relative mx-auto" style="width: 180px; height: 180px;">
+                                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, rgba(46, 139, 87, 0.2), rgba(60, 179, 113, 0.2), rgba(34, 139, 34, 0.2)); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; animation: morphing 15s ease-in-out infinite; filter: blur(2px);"></div>
+                                <div class="d-flex align-items-center justify-content-center" style="width: 100%; height: 100%; position: relative; z-index: 2;">
+                                    <div style="background-color: white; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                                        <i class="fas fa-building fa-3x" style="color: var(--primary-color);"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <style>
+                                @keyframes morphing {
+                                    0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+                                    25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+                                    50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+                                    75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+                                    100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+                                }
+                            </style>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
