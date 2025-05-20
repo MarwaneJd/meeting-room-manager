@@ -20,9 +20,6 @@ RUN ./mvnw package -DskipTests
 # Expose the port the app runs on
 EXPOSE 8080
 
-# Create a volume for persistent data
-VOLUME /tmp
-
 # Set Spring profile to prod
 ENV SPRING_PROFILES_ACTIVE=prod
 
