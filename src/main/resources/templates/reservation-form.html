@@ -9,15 +9,15 @@
 <section th:fragment="content">
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
-            <h3 class="card-title mb-0" th:text="${reservation.id == null ? 'Create New Reservation' : 'Edit Reservation'}">Reservation Form</h3>
+            <h3 class="card-title mb-0" th:text="${reservation.id == null ? 'Schedule a Meeting' : 'Edit Meeting Details'}">Reservation Form</h3>
         </div>
         <div class="card-body">
             <form th:action="@{${reservation.id == null ? '/reservations' : '/reservations/' + reservation.id}}" th:object="${reservation}" method="post">
                 <input type="hidden" th:field="*{id}" />
 
                 <div class="mb-3">
-                    <label for="title" class="form-label">Reservation Title</label>
-                    <input type="text" class="form-control" id="title" th:field="*{title}" required>
+                    <label for="title" class="form-label">Meeting Title</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Enter a descriptive title for your meeting" required>
                     <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                 </div>
 
@@ -31,29 +31,60 @@
                             Room Name
                         </option>
                     </select>
+                    <small class="text-muted">Choose the meeting space that best fits your needs</small>
                     <div class="text-danger" th:if="${#fields.hasErrors('room')}" th:errors="*{room}"></div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="startTime" class="form-label">Start Time</label>
-                        <input type="datetime-local" class="form-control flatpickr-datetime" id="startTime" th:field="*{startTime}" required>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                            <input type="datetime-local" class="form-control flatpickr-datetime" id="startTime" th:field="*{startTime}" required>
+                        </div>
+                        <small class="text-muted">When does your meeting begin?</small>
                         <div class="text-danger" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></div>
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label for="endTime" class="form-label">End Time</label>
-                        <input type="datetime-local" class="form-control flatpickr-datetime" id="endTime" th:field="*{endTime}" required>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                            <input type="datetime-local" class="form-control flatpickr-datetime" id="endTime" th:field="*{endTime}" required>
+                        </div>
+                        <small class="text-muted">When does your meeting end?</small>
                         <div class="text-danger" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"></div>
                     </div>
                 </div>
 
+                <div class="mb-4">
+                    <label class="form-label">Meeting Details</label>
+                    <div class="card p-3 bg-light">
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="needsProjector">
+                                <label class="form-check-label" for="needsProjector">Requires Projector</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="needsVideoConf">
+                                <label class="form-check-label" for="needsVideoConf">Video Conference</label>
+                            </div>
+                        </div>
+                        <div class="mb-0">
+                            <label for="attendees" class="form-label">Expected Attendees</label>
+                            <input type="number" class="form-control" id="attendees" placeholder="Number of attendees" min="1">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="d-flex justify-content-between">
-                    <a th:href="@{/reservations}" class="btn btn-secondary">
+                    <a th:href="@{/reservations}" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left me-1"></i> Cancel
                     </a>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save me-1"></i> Save Reservation
+                        <i class="fas fa-calendar-check me-1"></i> Confirm Booking
                     </button>
                 </div>
             </form>
@@ -69,7 +100,13 @@
             enableTime: true,
             dateFormat: "Y-m-d H:i",
             time_24hr: true,
-            minuteIncrement: 15
+            minuteIncrement: 15,
+            disableMobile: "true",
+            allowInput: true,
+            minDate: "today",
+            locale: {
+                firstDayOfWeek: 1
+            }
         });
     });
 </script>
