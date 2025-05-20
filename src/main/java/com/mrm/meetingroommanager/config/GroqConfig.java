@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GroqConfig {
 
-    @Value("${GROQ_API_KEY}")
+    @Value("${GROQ_API_KEY:test-api-key}")
     private String apiKey;
 
     public String getApiKey() {
