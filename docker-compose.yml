@@ -5,11 +5,14 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+    env_file:
+      - .env
     environment:
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=${SPRING_JPA_HIBERNATE_DDL_AUTO}
+      - GROQ_API_KEY=${GROQ_API_KEY}
     networks:
       - meeting-room-network
 
